@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CR2032 Documents Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, "Microsoft Yahei", sans-serif;
+        }
+
+        body {
+            /* 自定义深色背景图，修改bg.jpg为你的图片文件名 */
+            background: url("bg.jpg") center center / cover no-repeat fixed;
+            background-color: #222;
+            color: #fff;
+            line-height: 1.5;
+            padding-bottom: 30px;
+        }
+
+        /* 深色蒙版，压暗背景图 */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.35);
+            z-index:-1;
+        }
+
+        .hero {
+            /* 完全透明，去掉白色底色，保留文字 */
+            background: transparent;
+            backdrop-filter: none;
+            padding: 28px 16px 22px;
+            border-radius: 0 0 14px 14px;
+        }
+
+        .hero h1 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #ffffff;
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            padding: 18px 16px 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .file-list {
+            padding: 0 12px;
+        }
+
+        .file-item {
+            /* PDF卡片背景完全透明 */
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .file-icon {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .file-meta {
+            font-size: 13px;
+            color: #eee;
+            margin-top: 4px;
+        }
+
+        .btn-open {
+            display: block;
+            background: #2571d9;
+            color: #fff;
+            text-align: center;
+            padding: 11px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .btn-open:hover {
+            background: #1e5fbb;
+        }
+
+        @media (max-width: 480px) {
+            .file-item {
+                flex-wrap: wrap;
+            }
+
+            .btn-open {
+                width: 100%;
+                margin-top: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- 顶部企业介绍区 -->
+        <div class="hero">
+            <h1>CR2032 Battery - Certificates & Test Reports</h1>
+            <p>
+                We provide a complete set of CR2032 battery documents, including CE certificates, test reports,
+                ROHS reports, SDS files, UN38.3 reports, IEC standards reports, and transportation documents for sea
+                and air shipping. All documents are available for online viewing and download.
+            </p>
+        </div>
+
+        <!-- 文件列表标题 -->
+        <div class="section-title">Document List</div>
+
+        <div class="file-list" id="fileList"></div>
+
+    </div>
+
+<script>
+const pdfList = [
+    {
+        name: "EU Battery Regulation - CR2032",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/EU Battery Regulation - CR2032.pdf"
+    },
+    {
+        name: "CE Certificate",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CE Certificate.pdf"
+    },
+    {
+        name: "CE Test Report",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CE Test Report .pdf"
+    },
+    {
+        name: "CR2032 Drop Test Report",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032 Drop Test Report.pdf"
+    },
+    {
+        name: "CR2032 Stacking Test",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032 Stacking Test.pdf"
+    },
+    {
+        name: "CR2032 Test Summary",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032 Test Summary.pdf"
+    },
+    {
+        name: "CR2032-ROHS Cert",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-ROHS Cert.pdf"
+    },
+    {
+        name: "CR2032-ROHS Rep",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-ROHS Rep.pdf"
+    },
+    {
+        name: "CR2032-SDS",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-SDS.pdf"
+    },
+    {
+        name: "CR2032-SGS",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-SGS.pdf"
+    },
+    {
+        name: "CR2032-UN38.3",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-UN38.3.pdf"
+    },
+    {
+        name: "IEC 60086-4_test report",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/IEC 60086-4_test report.pdf"
+    },
+    {
+        name: "IEC_EN 60086-1 & -2 test report",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/IEC_EN 60086-1 & -2 test report.pdf"
+    },
+    {
+        name: "CR2032-Hazard Classification and Identification Report for Transport of Goods By Sea",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-Hazard Classification and Identification Report for Transport of Goods By Sea.pdf"
+    },
+    {
+        name: "CR2032-Hazard Classification and Identification Report for Transport of Goods By Air",
+        type: "PDF Document",
+        size: "Please check file size",
+        url: "https://anxinbattery-commits.github.io/CR2032.github.io/CR2032-Hazard Classification and Identification Report for Transport of Goods By Air.pdf"
+    }
+];
+
+// 内联 SVG PDF 图标
+const pdfIcon = `
+    <div class="file-icon">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#dc3545" d="M8 6a2 2 0 0 1 2-2h20l10 10v28a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6Z"/>
+            <path fill="#f8f9fa" d="M30 4v10h10"/>
+            <text x="24" y="38" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">PDF</text>
+        </svg>
+    </div>
+`;
+
+const fileList = document.getElementById("fileList");
+
+pdfList.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "file-item";
+    div.innerHTML = `
+        ${pdfIcon}
+        <div class="file-info">
+            <div class="file-name">${item.name}</div>
+            <div class="file-meta">${item.type} · ${item.size}</div>
+        </div>
+        <a href="${item.url}" target="_blank" class="btn-open">Open Document</a>
+    `;
+    fileList.appendChild(div);
+});
+</script>
+
+</body>
+</html>
